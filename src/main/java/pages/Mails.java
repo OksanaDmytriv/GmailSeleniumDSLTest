@@ -3,8 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 
 import static core.ConciseAPI.*;
-import static conditions.Conditions.listNthElementHasText;
-import static conditions.Conditions.textsOf;
+import static conditions.CustomConditions.listNthElementHasText;
+import static conditions.CustomConditions.textsOf;
 
 public class Mails {
 

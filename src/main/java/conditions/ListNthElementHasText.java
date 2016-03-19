@@ -1,14 +1,13 @@
 package conditions;
 
-import com.codeborne.selenide.impl.WebElementsCollection;
 import core.ConciseAPI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ListNthElementHasText<V> extends Conditions<V> {
-    public static By locator;
+public class ListNthElementHasText<V> extends CustomConditions<V> {
+
     private static String currentText;
     private static List<WebElement> elements;
     protected final String text;
@@ -20,17 +19,12 @@ public class ListNthElementHasText<V> extends Conditions<V> {
     }
 
     @Override
-    public void fail(WebElementsCollection collection, List<WebElement> elements, Exception lastError, long timeoutMs) {
-        throw new AssertionError();
-    }
-
-    @Override
     public String toString() {
         return String.format("\nActual text of element should is: %s\n", currentText);
     }
 
     @Override
-    public WebElement apply(By locator) {
+    public WebElement check(By locator) {
         elements = ConciseAPI.getDriver().findElements(locator);
         WebElement element = elements.get(index);
         currentText = element.getText();
