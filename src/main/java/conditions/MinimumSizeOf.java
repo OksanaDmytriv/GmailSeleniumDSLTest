@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class MinimumSizeOf extends Conditions{
+public class MinimumSizeOf<V> extends Conditions<V>{
 
     public static By locator;
     private static int listSize;

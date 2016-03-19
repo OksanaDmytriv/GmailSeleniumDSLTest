@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ListNthElementHasText extends Conditions {
+public class ListNthElementHasText<V> extends Conditions<V> {
     public static By locator;
     private static String currentText;
     private static List<WebElement> elements;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TextsOf extends Conditions{
+public class TextsOf<V> extends Conditions<V>{
 
     public static By locator;
     private static List<String> currentTexts;
