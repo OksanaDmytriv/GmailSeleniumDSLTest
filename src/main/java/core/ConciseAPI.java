@@ -35,7 +35,7 @@ public class ConciseAPI {
         ConciseAPI.driver = driver;
     }
 
-    public static <V> V assertThat(By locator, Conditions condition, int timeout) {
+    public static <V> V assertThat(By locator, Conditions<V> condition, int timeout) {
         return waitUntil(locator, condition, timeout);
     }
 
@@ -89,7 +89,7 @@ public class ConciseAPI {
         getDriver().get(URL);
     }
 
-    public static <V> V waitUntil(By locator, Conditions condition, long timeoutMs) {
+    public static <V> V waitUntil(By locator, Conditions<V> condition, long timeoutMs) {
         lastError = null;
         final long startTime = System.currentTimeMillis();
         boolean conditionMatched = false;
