@@ -20,7 +20,7 @@ public class ListNthElementHasText<V> extends CustomConditions<V> {
 
     @Override
     public String toString() {
-        return String.format("\nActual text of element should is: %s\n", currentText);
+        return String.format("\ntext of element should be: %s\n while actual text is: %s\n", text, currentText);
     }
 
     @Override

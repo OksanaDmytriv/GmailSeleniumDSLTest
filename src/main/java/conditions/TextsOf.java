@@ -23,7 +23,7 @@ public class TextsOf<V> extends CustomConditions<V> {
 
     @Override
     public String toString() {
-        return String.format("\nActual text of list is: %s\n", Arrays.toString(currentTexts.toArray()));
+        return String.format("\ntexts of element list should be: %s\n while actual texts are: %s\n", Arrays.toString(texts), Arrays.toString(currentTexts.toArray()));
     }
 
     @Override

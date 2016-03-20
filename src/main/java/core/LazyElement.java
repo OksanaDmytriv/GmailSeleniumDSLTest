@@ -3,56 +3,84 @@ package core;
 
 import conditions.CustomConditions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.interactions.Actions;
 
-public interface LazyElement {
-    
-    LazyElement setValue(String var1);
+import static core.ConciseAPI.*;
+import static core.Configuration.pollingIntervalInMillis;
 
-    LazyElement pressEnter();
+public class LazyElement {
+    private static By locator;
 
-    LazyElement pressEscape();
+    public LazyElement(By locator) {
+        this.locator = locator;
+    }
 
-    String getText();
+    public LazyElement click() {
+        Actions actions = new Actions(getDriver());
+        $(locator);
+        actions.click().perform();
+        //$(locator).click();
+        return this;
+    }
 
-    boolean isDisplayed();
+    public LazyElement setValue(String text) {
+        //LazyElement element = $(locator);
+        //$(locator).clear();
+        //$(locator).sendKeys(text);
+        return this;
+    }
 
-    LazyElement should(CustomConditions... var1);
+    public LazyElement sendKeys(String text) {
+        //LazyElement element = $(locator);
+        //$(locator).sendKeys(text);
+        $(locator).setValue()
+        return this;
+    }
 
-    LazyElement shouldHave(CustomConditions... var1);
 
-    LazyElement shouldBe(CustomConditions... var1);
+    public LazyElement clear() {
+        Actions actions = new Actions(getDriver());
+        $(locator);
+        actions.perform();
+        //$(locator).clear();
+        return this;
+    }
 
-    LazyElement waitUntil(CustomConditions var1, long var2);
+    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
+        final long startTime = System.currentTimeMillis();
+        do {
+            V results = condition.apply(locator);
+            if (results == null) {
+                sleep(pollingIntervalInMillis);
+                continue;
+            }
+            return results;
+        }
+        while (System.currentTimeMillis() - startTime < timeoutMs);
+        condition.fail();
+        return null;
+    }
 
-    String toString();
+    protected LazyElement should(CustomConditions... conditions) {
+        CustomConditions[] e = conditions;
+        int length = conditions.length;
 
-    LazyElement find(String var1);
+        for (int i = 0; i < length; ++i) {
+            CustomConditions condition = e[i];
+            this.waitUntil(locator, condition, Configuration.collectionsTimeout);
+        }
+        return this;
+    }
 
-    LazyElement find(String var1, int var2);
+    public LazyElement shouldHaveSize(int expectedSize) {
+        return this.shouldHave(new CustomConditions[]{CustomConditions.sizeOf(expectedSize)});
+    }
 
-    LazyElement find(By var1);
+    public LazyElement shouldBe(CustomConditions... conditions) {
+        return this.should(conditions);
+    }
 
-    LazyElement find(By var1, int var2);
-
-    LazyElement $(String var1);
-
-    LazyElement $(String var1, int var2);
-
-    LazyElement $(By var1);
-
-    LazyElement $(By var1, int var2);
-
-    LazyElements findAll(String var1);
-
-    LazyElements findAll(By var1);
-
-    LazyElements $$(String var1);
-
-    LazyElements $$(By var1);
-
-    void click();
-
-    LazyElement doubleClick();
-
-    LazyElement hover();
+    public LazyElement shouldHave(CustomConditions... conditions) {
+        return this.should(conditions);
+    }
 }

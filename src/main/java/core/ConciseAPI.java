@@ -4,14 +4,10 @@ import conditions.CustomConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static conditions.CustomConditions.elementVisible;
-import static conditions.CustomConditions.listVisible;
 import static core.Configuration.pollingIntervalInMillis;
 
 public class ConciseAPI {
@@ -38,7 +34,19 @@ public class ConciseAPI {
         return assertThat(locator, conditionToWaitElement);
     }
 
-    public static WebElement $(By locator) {
+    public static LazyElement $(By locator) {
+        return new LazyElement(locator);
+    }
+
+    public static LazyElement $(String cssSelector) {
+        return $(byCSS(cssSelector));
+    }
+
+    public static LazyElement $$$(String text) {
+        return new LazyElement(byText(text));
+    }
+
+    /*public static WebElement $(By locator) {
         return assertThat(locator, elementVisible);
     }
 
@@ -58,7 +66,7 @@ public class ConciseAPI {
         return $(parentElementLocator).findElement(innerElementLocator);
     }
 
-    /*public static WebElement $(By parentElementLocator, String... cssSelectorsOfInnerElements) {
+    public static WebElement $(By parentElementLocator, String... cssSelectorsOfInnerElements) {
         WebElement element;
         //WebElement element = $(parentElementLocator);
         for (String selector : cssSelectorsOfInnerElements) {
@@ -67,7 +75,7 @@ public class ConciseAPI {
         return element;
     }*/
 
-    public static List<WebElement> $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
+    /*public static List<WebElement> $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
         return assertThat(locator, conditionToWaitForListFilteredElements);
     }
 
@@ -76,6 +84,14 @@ public class ConciseAPI {
     }
 
     public static List<WebElement> $$(String cssSelector) {
+        return $$(byCSS(cssSelector));
+    }*/
+
+    public static LazyElements $$(By locator) {
+        return new LazyElements(locator);
+    }
+
+    public static LazyElements $$(String cssSelector) {
         return $$(byCSS(cssSelector));
     }
 
@@ -115,7 +131,7 @@ public class ConciseAPI {
         return null;
     }
 
-    public static WebElement hover(By locator) {
+    /*public static WebElement hover(By locator) {
         Actions actions = new Actions(getDriver());
         WebElement element = $(locator);
         actions.moveToElement(element).perform();
@@ -134,6 +150,6 @@ public class ConciseAPI {
         element.clear();
         element.sendKeys(text);
         return element;
-    }
+    }*/
 
 }

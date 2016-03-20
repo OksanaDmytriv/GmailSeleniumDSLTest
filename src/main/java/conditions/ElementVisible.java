@@ -7,9 +7,6 @@ import org.openqa.selenium.WebElement;
 public class ElementVisible extends CustomConditions<WebElement> {
 
     private static By locator;
-    public WebElement ElementVisible() {
-        return check (locator);
-    }
 
     @Override
     public String toString() {

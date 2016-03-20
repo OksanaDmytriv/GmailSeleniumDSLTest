@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class CustomConditions<V> {
 
     public void fail() {
-        new AssertionError(toString());
+        throw new AssertionError(toString());
     }
 
     public abstract String toString();

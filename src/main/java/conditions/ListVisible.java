@@ -10,10 +10,6 @@ import java.util.List;
 public class ListVisible extends CustomConditions<List<WebElement>> {
 
     private static By locator;
-    public List<WebElement> ListVisible() {
-        this.locator;
-        return check(locator);
-    }
 
     @Override
     public String toString() {

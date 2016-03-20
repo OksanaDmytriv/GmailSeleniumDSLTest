@@ -3,6 +3,7 @@ package core;
 import conditions.CustomConditions;
 import org.openqa.selenium.By;
 
+import static core.ConciseAPI.sleep;
 import static core.Configuration.pollingIntervalInMillis;
 
 public class LazyElements {
@@ -13,49 +14,7 @@ public class LazyElements {
         this.locator = locator;
     }
 
-    /*public static <V> V assertThat(CustomConditions<V> condition, int timeout) {
-        return waitUntil(condition, timeout);
-    }
-
-    public static <V> V assertThat(CustomConditions<V> condition) {
-        return assertThat(condition, Configuration.timeout * 1000);
-    }*/
-
-    public static By byCSS(String cssSelector) {
-        return By.cssSelector(cssSelector);
-    }
-
-    public static LazyElements $$(By locator)
-    {
-        return (LazyElements) ConciseAPI.getDriver().findElements(locator);
-    }
-
-    public static LazyElements $$(String cssSelector) {
-        return $$(byCSS(cssSelector));
-    }
-
-    /*public static LazyElements $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
-        return assertThat(conditionToWaitForListFilteredElements);
-    }
-
-    public static LazyElements $$(By locator) {
-        return $$(locator, listVisible(locator));
-    }
-
-    public static LazyElements $$(String cssSelector) {
-        return $$(byCSS(cssSelector), listVisible(byCSS(cssSelector)));
-    }*/
-
-    public static void sleep(int milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static <V> V waitUntil(CustomConditions<V> condition, int timeoutMs) {
+    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
         final long startTime = System.currentTimeMillis();
         do {
             V results = condition.apply(locator);
@@ -76,7 +35,7 @@ public class LazyElements {
 
         for (int i = 0; i < length; ++i) {
             CustomConditions condition = e[i];
-            this.waitUntil(condition, Configuration.collectionsTimeout);
+            this.waitUntil(locator, condition, Configuration.collectionsTimeout);
         }
         return this;
     }

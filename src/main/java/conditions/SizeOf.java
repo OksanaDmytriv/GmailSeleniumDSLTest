@@ -18,7 +18,7 @@ public class SizeOf<V> extends CustomConditions<V> {
 
     @Override
     public String toString() {
-        return String.format("\nActual size of list: %s\n is: %s\n", results, listSize);
+        return String.format("\nsize of list: %s\n should be: %s\n while actual size is: %s\n", results, expectedSize, listSize);
     }
 
     @Override
