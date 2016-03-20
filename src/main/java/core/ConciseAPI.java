@@ -31,7 +31,7 @@ public class ConciseAPI {
     }
 
     public static <V> V assertThat(By locator, CustomConditions<V> condition) {
-        return assertThat(locator, condition, Configuration.timeout*1000);
+        return assertThat(locator, condition, Configuration.timeout);
     }
 
     public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitElement) {
@@ -39,7 +39,7 @@ public class ConciseAPI {
     }
 
     public static WebElement $(By locator) {
-        return assertThat(locator, elementVisible(locator));
+        return assertThat(locator, elementVisible);
     }
 
     public static WebElement $(String cssSelector) {
@@ -47,7 +47,7 @@ public class ConciseAPI {
     }
 
     public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, By innerElementLocator) {
-        return assertThat(locator, conditionToWaitParentElement).findElement(innerElementLocator);
+        return $(locator, conditionToWaitParentElement).findElement(innerElementLocator);
     }
 
     public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, String innerElementCssSelector) {
@@ -72,11 +72,11 @@ public class ConciseAPI {
     }
 
     public static List<WebElement> $$(By locator) {
-        return $$(locator, listVisible(locator));
+        return $$(locator, listVisible);
     }
 
     public static List<WebElement> $$(String cssSelector) {
-        return $$(byCSS(cssSelector), listVisible(byCSS(cssSelector)));
+        return $$(byCSS(cssSelector));
     }
 
     public static By byText(String text) {

@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 public class ElementVisible extends CustomConditions<WebElement> {
 
     private static By locator;
-    public ElementVisible(By locator) {
-        this.locator=locator;
+    public WebElement ElementVisible() {
+        return check (locator);
     }
 
     @Override

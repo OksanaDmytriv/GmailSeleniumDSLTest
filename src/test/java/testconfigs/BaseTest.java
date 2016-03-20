@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class BaseTest {
 
     static {
-        Configuration.timeout = 20;
+        Configuration.timeout = 20000;
     }
 
     @BeforeClass

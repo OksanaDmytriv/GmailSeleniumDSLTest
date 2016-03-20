@@ -46,11 +46,8 @@ public abstract class CustomConditions<V> {
         return new MinimumSizeOf(minimumSize);
     }
 
-    public static CustomConditions<WebElement> elementVisible(By locator){
-        return new ElementVisible(locator);
-    }
+    public static CustomConditions<WebElement> elementVisible = new ElementVisible();
 
-    public static CustomConditions<List<WebElement>> listVisible(By locator){
-        return new ListVisible(locator);
-    }
+    public static CustomConditions<List<WebElement>> listVisible = new ListVisible();
+
 }
