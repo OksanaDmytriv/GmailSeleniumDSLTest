@@ -1,31 +1,30 @@
 package conditions;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.List;
 
 public abstract class CustomConditions<V> {
 
     public void fail() {
-        toString();
+        new AssertionError(toString());
     }
 
     public abstract String toString();
 
-    public abstract <V> V check(By locator);
+    protected abstract <V> V check(By locator);
 
-    public <V> V apply(By locator, CustomConditions<V> condition) {
+    public <V> V apply(By locator) {
         try {
-            return condition.check(locator);
+            return check(locator);
         } catch (StaleElementReferenceException e) {
             return null;
         } catch (ElementNotVisibleException e) {
             return null;
         } catch (IndexOutOfBoundsException e) {
+            return null;
+        } catch (NoSuchElementException e) {
             return null;
         }
     }
@@ -45,5 +44,13 @@ public abstract class CustomConditions<V> {
 
     public static CustomConditions<List<WebElement>> minimumSizeOf(final int minimumSize) {
         return new MinimumSizeOf(minimumSize);
+    }
+
+    public static CustomConditions<WebElement> elementVisible(By locator){
+        return new ElementVisible(locator);
+    }
+
+    public static CustomConditions<List<WebElement>> listVisible(By locator){
+        return new ListVisible(locator);
     }
 }

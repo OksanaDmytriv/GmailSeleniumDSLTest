@@ -22,7 +22,7 @@ public class SizeOf<V> extends CustomConditions<V> {
     }
 
     @Override
-    public List<WebElement> check(By locator) {
+    protected List<WebElement> check(By locator) {
         results = ConciseAPI.getDriver().findElements(locator);
         listSize = results.size();
         return (listSize == expectedSize) ? results : null;

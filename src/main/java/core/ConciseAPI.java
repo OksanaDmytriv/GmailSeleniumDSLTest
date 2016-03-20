@@ -4,16 +4,15 @@ import conditions.CustomConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static core.Configuration.pollingIntervalInMilis;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import static conditions.CustomConditions.elementVisible;
+import static conditions.CustomConditions.listVisible;
+import static core.Configuration.pollingIntervalInMillis;
 
 public class ConciseAPI {
 
@@ -32,27 +31,52 @@ public class ConciseAPI {
     }
 
     public static <V> V assertThat(By locator, CustomConditions<V> condition) {
-        return assertThat(locator, condition, Configuration.timeout);
+        return assertThat(locator, condition, Configuration.timeout*1000);
     }
 
-    public static <V> V assertThat(ExpectedCondition<V> condition) {
-        return assertThat(condition, Configuration.timeout);
-    }
-
-    public static <V> V assertThat(ExpectedCondition<V> condition, int timeout) {
-        return (new WebDriverWait(getDriver(), timeout)).until(condition);
+    public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitElement) {
+        return assertThat(locator, conditionToWaitElement);
     }
 
     public static WebElement $(By locator) {
-        return assertThat(visibilityOfElementLocated(locator));
+        return assertThat(locator, elementVisible(locator));
     }
 
     public static WebElement $(String cssSelector) {
         return $(byCSS(cssSelector));
     }
 
+    public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, By innerElementLocator) {
+        return assertThat(locator, conditionToWaitParentElement).findElement(innerElementLocator);
+    }
+
+    public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, String innerElementCssSelector) {
+        return $(locator, conditionToWaitParentElement, byCSS(innerElementCssSelector));
+    }
+
+    public static WebElement $(By parentElementLocator, By innerElementLocator) {
+        return $(parentElementLocator).findElement(innerElementLocator);
+    }
+
+    /*public static WebElement $(By parentElementLocator, String... cssSelectorsOfInnerElements) {
+        WebElement element;
+        //WebElement element = $(parentElementLocator);
+        for (String selector : cssSelectorsOfInnerElements) {
+            element = $(parentElementLocator, byCSS(selector));
+        }
+        return element;
+    }*/
+
+    public static List<WebElement> $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
+        return assertThat(locator, conditionToWaitForListFilteredElements);
+    }
+
     public static List<WebElement> $$(By locator) {
-        return assertThat(visibilityOfAllElementsLocatedBy(locator));
+        return $$(locator, listVisible(locator));
+    }
+
+    public static List<WebElement> $$(String cssSelector) {
+        return $$(byCSS(cssSelector), listVisible(byCSS(cssSelector)));
     }
 
     public static By byText(String text) {
@@ -77,18 +101,39 @@ public class ConciseAPI {
     }
 
     public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
-        V results = condition.apply(locator, condition);
         final long startTime = System.currentTimeMillis();
         do {
+            V results = condition.apply(locator);
             if (results == null) {
-                sleep(pollingIntervalInMilis);
+                sleep(pollingIntervalInMillis);
                 continue;
             }
             return results;
         }
         while (System.currentTimeMillis() - startTime < timeoutMs);
         condition.fail();
-        return results;
+        return null;
+    }
+
+    public static WebElement hover(By locator) {
+        Actions actions = new Actions(getDriver());
+        WebElement element = $(locator);
+        actions.moveToElement(element).perform();
+        return element;
+    }
+
+    public static WebElement doubleClick(By locator) {
+        Actions actions = new Actions(getDriver());
+        WebElement element = $(locator);
+        actions.doubleClick(element).perform();
+        return element;
+    }
+
+    public static WebElement setValue(By locator, String text) {
+        WebElement element = $(locator);
+        element.clear();
+        element.sendKeys(text);
+        return element;
     }
 
 }

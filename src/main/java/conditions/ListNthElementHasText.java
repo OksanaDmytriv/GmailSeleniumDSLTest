@@ -24,7 +24,7 @@ public class ListNthElementHasText<V> extends CustomConditions<V> {
     }
 
     @Override
-    public WebElement check(By locator) {
+    protected WebElement check(By locator) {
         elements = ConciseAPI.getDriver().findElements(locator);
         WebElement element = elements.get(index);
         currentText = element.getText();

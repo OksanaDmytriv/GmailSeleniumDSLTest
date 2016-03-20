@@ -27,7 +27,7 @@ public class TextsOf<V> extends CustomConditions<V> {
     }
 
     @Override
-    public List<WebElement> check(By locator) {
+    protected List<WebElement> check(By locator) {
         elements = ConciseAPI.getDriver().findElements(locator);
         currentTexts = new ArrayList<String>();
         for (int i = 0; i < elements.size(); ++i) {

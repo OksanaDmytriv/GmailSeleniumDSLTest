@@ -25,7 +25,7 @@ public class MinimumSizeOf<V> extends CustomConditions<V> {
     }
 
     @Override
-    public List<WebElement> check(By locator) {
+    protected List<WebElement> check(By locator) {
         results = ConciseAPI.getDriver().findElements(locator);
         listSize = results.size();
         return (listSize >= minimumSize) ? results : null;
