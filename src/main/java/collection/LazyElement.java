@@ -1,7 +1,6 @@
 package collection;
 
 import conditions.CustomConditions;
-import core.Configuration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -68,7 +67,7 @@ public class LazyElement extends Lazy {
 
     public LazyElement should(CustomConditions... conditions) {
         for (CustomConditions condition : conditions) {
-            assertThat(condition, Configuration.collectionsTimeout);
+            assertThat(condition);
         }
         return this;
     }

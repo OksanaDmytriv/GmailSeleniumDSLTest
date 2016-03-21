@@ -1,7 +1,6 @@
 package collection;
 
 import conditions.CustomConditions;
-import core.Configuration;
 import org.openqa.selenium.By;
 
 import static conditions.CustomConditions.sizeOf;
@@ -14,7 +13,7 @@ public class LazyElements extends Lazy {
 
     public LazyElements should(CustomConditions... conditions) {
         for (CustomConditions condition : conditions) {
-            assertThat(condition, Configuration.collectionsTimeout);
+            assertThat(condition);
         }
         return this;
     }
