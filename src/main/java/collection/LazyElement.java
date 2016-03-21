@@ -66,9 +66,7 @@ public class LazyElement extends Lazy {
     }
 
     public LazyElement should(CustomConditions... conditions) {
-        for (CustomConditions condition : conditions) {
-            assertThat(condition);
-        }
+        assertThat(conditions);
         return this;
     }
 

@@ -12,9 +12,7 @@ public class LazyElements extends Lazy {
     }
 
     public LazyElements should(CustomConditions... conditions) {
-        for (CustomConditions condition : conditions) {
-            assertThat(condition);
-        }
+        assertThat(conditions);
         return this;
     }
 
