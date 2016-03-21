@@ -2,22 +2,21 @@ package pages;
 
 import org.openqa.selenium.By;
 
-import static conditions.CustomConditions.elementVisible;
 import static core.ConciseAPI.$;
 import static core.ConciseAPI.byCSS;
 
 public class Menu {
 
     public static void refresh() {
-        $(byCSS(".asf")).shouldBe(elementVisible).click();
+        $(byCSS(".asf")).click();
     }
 
     public static void openSent() {
-        $(By.linkText("Sent Mail")).shouldBe(elementVisible).click();
+        $(By.linkText("Sent Mail")).click();
     }
 
     public static void openInbox() {
-        $(byCSS("a[aria-label^='Inbox']")).shouldBe(elementVisible).click();
+        $(byCSS("a[aria-label^='Inbox']")).click();
     }
 
     public static void search(String subject) {

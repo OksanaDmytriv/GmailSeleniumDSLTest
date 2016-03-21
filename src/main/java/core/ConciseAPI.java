@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.Map;
 
+import static conditions.CustomConditions.elementVisible;
+import static conditions.CustomConditions.listVisible;
 import static core.Configuration.pollingIntervalInMillis;
 
 public class ConciseAPI {
@@ -35,11 +37,11 @@ public class ConciseAPI {
     }
 
     public static LazyElement $(By locator) {
-        return new LazyElement(locator);
+        return new LazyElement(locator).shouldBe(elementVisible);
     }
 
     public static LazyElement $(String cssSelector) {
-        return $(byCSS(cssSelector));
+        return $(byCSS(cssSelector)).shouldBe(elementVisible);
     }
 
     /*public static WebElement $(By locator) {
@@ -84,11 +86,11 @@ public class ConciseAPI {
     }*/
 
     public static LazyElements $$(By locator) {
-        return new LazyElements(locator);
+        return new LazyElements(locator).shouldBe(listVisible);
     }
 
     public static LazyElements $$(String cssSelector) {
-        return $$(byCSS(cssSelector));
+        return $$(byCSS(cssSelector)).shouldBe(listVisible);
     }
 
     public static By byText(String text) {
