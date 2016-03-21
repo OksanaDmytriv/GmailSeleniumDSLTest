@@ -1,16 +1,10 @@
 package core;
 
-import conditions.CustomConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static conditions.CustomConditions.elementVisible;
-import static conditions.CustomConditions.listVisible;
-import static core.Configuration.pollingIntervalInMillis;
 
 public class ConciseAPI {
 
@@ -22,26 +16,6 @@ public class ConciseAPI {
 
     public static void setDriver(WebDriver driver) {
         drivers.put(Thread.currentThread(), driver);
-    }
-
-    public static <V> V assertThat(By locator, CustomConditions<V> condition, int timeout) {
-        return waitUntil(locator, condition, timeout);
-    }
-
-    public static <V> V assertThat(By locator, CustomConditions<V> condition) {
-        return assertThat(locator, condition, Configuration.timeout);
-    }
-
-    public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitElement) {
-        return assertThat(locator, conditionToWaitElement);
-    }
-
-    public static LazyElement $(By locator) {
-        return new LazyElement(locator).shouldBe(elementVisible);
-    }
-
-    public static LazyElement $(String cssSelector) {
-        return $(byCSS(cssSelector)).shouldBe(elementVisible);
     }
 
     /*public static WebElement $(By locator) {
@@ -85,13 +59,6 @@ public class ConciseAPI {
         return $$(byCSS(cssSelector));
     }*/
 
-    public static LazyElements $$(By locator) {
-        return new LazyElements(locator).shouldBe(listVisible);
-    }
-
-    public static LazyElements $$(String cssSelector) {
-        return $$(byCSS(cssSelector)).shouldBe(listVisible);
-    }
 
     public static By byText(String text) {
         return By.xpath("//*[text()[contains(.,'" + text + "')]]");
@@ -105,27 +72,5 @@ public class ConciseAPI {
         getDriver().get(URL);
     }
 
-    public static void sleep(int milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
-        final long startTime = System.currentTimeMillis();
-        do {
-            V results = condition.apply(locator);
-            if (results == null) {
-                sleep(pollingIntervalInMillis);
-                continue;
-            }
-            return results;
-        }
-        while (System.currentTimeMillis() - startTime < timeoutMs);
-        condition.fail();
-        return null;
-    }
 }

@@ -3,18 +3,13 @@ package core;
 import conditions.CustomConditions;
 import org.openqa.selenium.By;
 
-import static core.ConciseAPI.sleep;
-import static core.Configuration.pollingIntervalInMillis;
-
-public class LazyElements {
-
-    private static By locator;
+public class LazyElements extends Lazy{
 
     public LazyElements(By locator) {
-        this.locator = locator;
+        super(locator);
     }
 
-    protected LazyElements should(CustomConditions... conditions) {
+    public LazyElements should(CustomConditions... conditions) {
         CustomConditions[] e = conditions;
         int length = conditions.length;
 
@@ -26,7 +21,7 @@ public class LazyElements {
     }
 
     public LazyElements shouldHaveSize(int expectedSize) {
-        return this.shouldHave(new CustomConditions[]{CustomConditions.sizeOf(expectedSize)});
+        return this.should(new CustomConditions[]{CustomConditions.sizeOf(expectedSize)});
     }
 
     public LazyElements shouldBe(CustomConditions... conditions) {
@@ -37,20 +32,6 @@ public class LazyElements {
         return this.should(conditions);
     }
 
-    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
-        final long startTime = System.currentTimeMillis();
-        do {
-            V results = condition.apply(locator);
-            if (results == null) {
-                sleep(pollingIntervalInMillis);
-                continue;
-            }
-            return results;
-        }
-        while (System.currentTimeMillis() - startTime < timeoutMs);
-        condition.fail();
-        return null;
-    }
 
 }
 
