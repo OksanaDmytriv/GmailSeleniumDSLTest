@@ -1,6 +1,6 @@
 package pages;
 
-import core.LazyElements;
+import collection.LazyElements;
 import org.openqa.selenium.By;
 
 import static conditions.CustomConditions.*;

@@ -1,5 +1,7 @@
 package core;
 
+import collection.LazyElement;
+import collection.LazyElements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -18,16 +20,29 @@ public class ConciseAPI {
         drivers.put(Thread.currentThread(), driver);
     }
 
-    /*public static WebElement $(By locator) {
-        return assertThat(locator, elementVisible);
+    public static LazyElement $(By locator) {
+        return new LazyElement(locator);
     }
 
+    public static LazyElement $(String cssSelector) {
+        return $(byCSS(cssSelector));
+    }
+
+    public static LazyElements $$(By locator) {
+        return new LazyElements(locator);
+    }
+
+    public static LazyElements $$(String cssSelector) {
+        return $$(byCSS(cssSelector));
+    }
+
+    /*
     public static WebElement $(String cssSelector) {
         return $(byCSS(cssSelector));
     }
 
     public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, By innerElementLocator) {
-        return $(locator, conditionToWaitParentElement).findElement(innerElementLocator);
+        return $(locator, conditionToWaitParentElement).$(innerElementLocator);
     }
 
     public static WebElement $(By locator, CustomConditions<WebElement> conditionToWaitParentElement, String innerElementCssSelector) {
@@ -35,7 +50,7 @@ public class ConciseAPI {
     }
 
     public static WebElement $(By parentElementLocator, By innerElementLocator) {
-        return $(parentElementLocator).findElement(innerElementLocator);
+        return $(parentElementLocator).$(innerElementLocator);
     }
 
     public static WebElement $(By parentElementLocator, String... cssSelectorsOfInnerElements) {
@@ -59,7 +74,6 @@ public class ConciseAPI {
         return $$(byCSS(cssSelector));
     }*/
 
-
     public static By byText(String text) {
         return By.xpath("//*[text()[contains(.,'" + text + "')]]");
     }
@@ -71,6 +85,4 @@ public class ConciseAPI {
     public static void open(String URL) {
         getDriver().get(URL);
     }
-
-
 }
