@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.Iterator;
 import java.util.List;
 
-public class ListVisible extends CustomConditions<List<WebElement>> {
+public class ListVisible<V> extends CustomConditions<V> {
 
     private static By locator;
 

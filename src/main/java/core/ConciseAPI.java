@@ -42,10 +42,6 @@ public class ConciseAPI {
         return $(byCSS(cssSelector));
     }
 
-    public static LazyElement $$$(String text) {
-        return new LazyElement(byText(text));
-    }
-
     /*public static WebElement $(By locator) {
         return assertThat(locator, elementVisible);
     }
@@ -73,9 +69,9 @@ public class ConciseAPI {
             element = $(parentElementLocator, byCSS(selector));
         }
         return element;
-    }*/
+    }
 
-    /*public static List<WebElement> $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
+    public static List<WebElement> $$(By locator, CustomConditions<List<WebElement>> conditionToWaitForListFilteredElements) {
         return assertThat(locator, conditionToWaitForListFilteredElements);
     }
 
@@ -130,26 +126,4 @@ public class ConciseAPI {
         condition.fail();
         return null;
     }
-
-    /*public static WebElement hover(By locator) {
-        Actions actions = new Actions(getDriver());
-        WebElement element = $(locator);
-        actions.moveToElement(element).perform();
-        return element;
-    }
-
-    public static WebElement doubleClick(By locator) {
-        Actions actions = new Actions(getDriver());
-        WebElement element = $(locator);
-        actions.doubleClick(element).perform();
-        return element;
-    }
-
-    public static WebElement setValue(By locator, String text) {
-        WebElement element = $(locator);
-        element.clear();
-        element.sendKeys(text);
-        return element;
-    }*/
-
 }

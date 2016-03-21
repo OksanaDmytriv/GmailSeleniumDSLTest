@@ -4,7 +4,7 @@ import core.ConciseAPI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class ElementVisible extends CustomConditions<WebElement> {
+public class ElementVisible<V> extends CustomConditions<V> {
 
     private static By locator;
 

@@ -3,9 +3,12 @@ package core;
 
 import conditions.CustomConditions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import static core.ConciseAPI.*;
+import static core.ConciseAPI.getDriver;
+import static core.ConciseAPI.sleep;
 import static core.Configuration.pollingIntervalInMillis;
 
 public class LazyElement {
@@ -16,49 +19,49 @@ public class LazyElement {
     }
 
     public LazyElement click() {
-        Actions actions = new Actions(getDriver());
-        $(locator);
-        actions.click().perform();
-        //$(locator).click();
+        WebElement element = getDriver().findElement(locator);
+        element.click();
         return this;
     }
 
     public LazyElement setValue(String text) {
-        //LazyElement element = $(locator);
-        //$(locator).clear();
-        //$(locator).sendKeys(text);
+        WebElement element = getDriver().findElement(locator);
+        element.clear();
+        element.sendKeys(text);
         return this;
     }
 
     public LazyElement sendKeys(String text) {
-        //LazyElement element = $(locator);
-        //$(locator).sendKeys(text);
-        $(locator).setValue()
+        WebElement element = getDriver().findElement(locator);
+        element.clear();
+        element.sendKeys(text);
         return this;
     }
-
 
     public LazyElement clear() {
-        Actions actions = new Actions(getDriver());
-        $(locator);
-        actions.perform();
-        //$(locator).clear();
+        WebElement element = getDriver().findElement(locator);
+        element.clear();
         return this;
     }
 
-    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
-        final long startTime = System.currentTimeMillis();
-        do {
-            V results = condition.apply(locator);
-            if (results == null) {
-                sleep(pollingIntervalInMillis);
-                continue;
-            }
-            return results;
-        }
-        while (System.currentTimeMillis() - startTime < timeoutMs);
-        condition.fail();
-        return null;
+    public LazyElement pressEnter() {
+        WebElement element = getDriver().findElement(locator);
+        element.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    public LazyElement hover() {
+        Actions actions = new Actions(getDriver());
+        WebElement element = getDriver().findElement(locator);
+        actions.moveToElement(element).perform();
+        return this;
+    }
+
+    public LazyElement doubleClick(By locator) {
+        Actions actions = new Actions(getDriver());
+        WebElement element = getDriver().findElement(locator);
+        actions.doubleClick(element).perform();
+        return this;
     }
 
     protected LazyElement should(CustomConditions... conditions) {
@@ -82,5 +85,21 @@ public class LazyElement {
 
     public LazyElement shouldHave(CustomConditions... conditions) {
         return this.should(conditions);
+    }
+
+
+    public static <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
+        final long startTime = System.currentTimeMillis();
+        do {
+            V results = condition.apply(locator);
+            if (results == null) {
+                sleep(pollingIntervalInMillis);
+                continue;
+            }
+            return results;
+        }
+        while (System.currentTimeMillis() - startTime < timeoutMs);
+        condition.fail();
+        return null;
     }
 }

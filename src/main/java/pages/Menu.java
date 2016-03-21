@@ -1,7 +1,6 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 import static conditions.CustomConditions.elementVisible;
 import static core.ConciseAPI.$;
@@ -22,7 +21,6 @@ public class Menu {
     }
 
     public static void search(String subject) {
-        $(By.name("q")).shouldBe(elementVisible).clear();
-        $(By.name("q")).shouldBe(elementVisible).sendKeys("subject:" + subject + Keys.ENTER);
+        $(By.name("q")).setValue("subject:" + subject).pressEnter();
     }
 }
