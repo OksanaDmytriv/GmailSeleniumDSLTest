@@ -3,9 +3,7 @@ package collection;
 import conditions.CustomConditions;
 import org.openqa.selenium.By;
 
-import static conditions.CustomConditions.sizeOf;
-
-public class LazyElements extends Lazy {
+public class LazyElements extends LazyEntity {
 
     public LazyElements(By locator) {
         super(locator);
@@ -14,10 +12,6 @@ public class LazyElements extends Lazy {
     public LazyElements should(CustomConditions... conditions) {
         assertThat(conditions);
         return this;
-    }
-
-    public LazyElements shouldHaveSize(int expectedSize) {
-        return should(new CustomConditions[]{sizeOf(expectedSize)});
     }
 
     public LazyElements shouldBe(CustomConditions... conditions) {

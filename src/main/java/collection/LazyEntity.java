@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 
 import static core.Configuration.pollingIntervalInMillis;
 
-public class Lazy {
+public class LazyEntity {
 
     public By locator;
 
-    public Lazy(By locator) {
+    public LazyEntity(By locator) {
         this.locator = locator;
     }
 
