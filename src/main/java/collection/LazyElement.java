@@ -15,39 +15,39 @@ public class LazyElement extends LazyEntity {
     }
 
     public LazyElement click() {
-        WebElement element = assertThat(CustomConditions.elementVisible);
-        element.click();
+        assertThat(CustomConditions.elementVisible);
+        getWrappedElement().click();
         return this;
     }
 
     public LazyElement setValue(String text) {
-        WebElement element = assertThat(CustomConditions.elementVisible);
-        element.clear();
-        element.sendKeys(text);
+        assertThat(CustomConditions.elementVisible);
+        getWrappedElement().clear();
+        getWrappedElement().sendKeys(text);
         return this;
     }
 
     public LazyElement sendKeys(String text) {
         WebElement element = assertThat(CustomConditions.elementVisible);
-        element.sendKeys(text);
+        getWrappedElement().sendKeys(text);
         return this;
     }
 
     public LazyElement clear() {
         WebElement element = assertThat(CustomConditions.elementVisible);
-        element.clear();
+        getWrappedElement().clear();
         return this;
     }
 
     public LazyElement pressEnter() {
         WebElement element = assertThat(CustomConditions.elementVisible);
-        element.sendKeys(Keys.ENTER);
+        getWrappedElement().sendKeys(Keys.ENTER);
         return this;
     }
 
     public LazyElement pressEscape() {
         WebElement element = assertThat(CustomConditions.elementVisible);
-        element.sendKeys(Keys.ESCAPE);
+        getWrappedElement().sendKeys(Keys.ESCAPE);
         return this;
     }
 

@@ -5,6 +5,9 @@ import core.Configuration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
+import static core.ConciseAPI.getDriver;
 import static core.Configuration.pollingIntervalInMillis;
 
 public class LazyEntity {
@@ -16,19 +19,11 @@ public class LazyEntity {
     }
 
     protected <V> V assertThat(CustomConditions<V> condition, int timeout) {
-        return waitUntil(locator, condition, timeout);
+        return waitUntil(condition, timeout);
     }
 
     protected <V> V assertThat(CustomConditions<V> condition) {
         return assertThat(condition, Configuration.timeout);
-    }
-
-    protected WebElement findElement(CustomConditions<WebElement> conditionToWaitElement) {
-        return assertThat(conditionToWaitElement);
-    }
-
-    protected WebElement findElement(By locator) {
-        return assertThat(CustomConditions.elementVisible);
     }
 
     protected <V> V assertThat(CustomConditions<V>... conditions) {
@@ -37,6 +32,16 @@ public class LazyEntity {
             result = assertThat(condition);
         }
         return result;
+    }
+
+    public WebElement getWrappedElement(){
+      WebElement element = getDriver().findElement(locator);
+        return element;
+    }
+
+    public List<WebElement> getWrappedElements(){
+        List<WebElement> elements = getDriver().findElements(locator);
+        return elements;
     }
 
     private void sleep(int milliseconds) {
@@ -48,7 +53,7 @@ public class LazyEntity {
         }
     }
 
-    private <V> V waitUntil(By locator, CustomConditions<V> condition, int timeoutMs) {
+    private <V> V waitUntil(CustomConditions<V> condition, int timeoutMs) {
         final long startTime = System.currentTimeMillis();
         do {
             V results = condition.apply(locator);
